@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1e4915ce-4351-466b-b26f-c0fb87987282}</ProjectGuid>
+    <ProjectGuid>{7a24affd-a03e-4cfa-aa1a-bf5966b11be8}</ProjectGuid>
     <RootNamespace>NPCa</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="npc_a.cpp" />
+    <ClCompile Include="NPC_a.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
