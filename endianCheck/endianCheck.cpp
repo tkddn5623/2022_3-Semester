@@ -2,6 +2,7 @@
 
 int main()
 {
-	unsigned int a = 3000000000u;
-	printf("%u", -1);
+	//char C = '\0x0A';
+	printf("a \x0A b");
+
 }
