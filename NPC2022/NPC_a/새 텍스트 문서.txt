@@ -1,0 +1,36 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+typedef struct student
+{
+    int room;
+    int score[50]; //initalization section HOW?
+};
+
+int main()
+{
+    int people, A, B, week;
+    int input;
+    struct student Student[100];
+
+    scanf("%d %d %d %d", &people, &A, &B, &week);
+    for (int i = 0; i < people; i++) { //Initalization score[50].
+        for (int j = 0; j < M - 1; j++) {
+            Student[i].score[j] = 0;
+        }
+    }
+    for (int i = 0; i < week - 1; i++) { //Score input
+        for (int j = 0; j < people; j++) {
+            scanf("%d", &input);
+            Student[j].score[i] += input;
+        }
+        for (int j = 0; j < people; j++) {
+            scanf("%d", &input);
+            Student[j].score[i] -= input;
+        }
+    }
+    ////////////////////////////////////////////////////////
+    
+
+
+}
