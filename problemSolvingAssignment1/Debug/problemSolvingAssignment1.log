@@ -1,0 +1,4 @@
+﻿  problemSolvingAssignment1.cpp
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingAssignment1\problemSolvingAssignment1.cpp(6,9): warning C4477: 'printf' : format string '%llu' requires an argument of type 'unsigned __int64', but variadic argument 1 has type 'int *'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingAssignment1\problemSolvingAssignment1.cpp(6,9): warning C4313: 'printf': '%u' in format string conflicts with argument 1 of type 'int *'
+  problemSolvingAssignment1.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingAssignment1\Debug\problemSolvingAssignment1.exe

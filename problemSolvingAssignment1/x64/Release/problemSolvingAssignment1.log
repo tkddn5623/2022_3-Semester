@@ -1,0 +1,7 @@
+﻿  problemSolvingAssignment1.cpp
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingAssignment1\problemSolvingAssignment1.cpp(6,9): warning C4477: 'printf' : format string '%llu' requires an argument of type 'unsigned __int64', but variadic argument 1 has type 'int *'
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 4 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  problemSolvingAssignment1.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingAssignment1\x64\Release\problemSolvingAssignment1.exe
