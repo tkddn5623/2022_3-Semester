@@ -1,6 +1,0 @@
-﻿  pointerAboutString.c
-E:\!!Documents 2021\!!Programming projects\2022_3-Semester\pointerAboutString\pointerAboutString.c(13,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-E:\!!Documents 2021\!!Programming projects\2022_3-Semester\pointerAboutString\pointerAboutString.c(13,9): message : consider using '%zd' in the format string
-E:\!!Documents 2021\!!Programming projects\2022_3-Semester\pointerAboutString\pointerAboutString.c(13,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'size_t'
-E:\!!Documents 2021\!!Programming projects\2022_3-Semester\pointerAboutString\pointerAboutString.c(13,9): message : consider using '%zd' in the format string
-  pointerAboutString.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\pointerAboutString\x64\Debug\pointerAboutString.exe

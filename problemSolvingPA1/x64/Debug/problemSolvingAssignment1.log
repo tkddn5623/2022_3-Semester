@@ -1,3 +1,11 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (problemSolvingAssignment1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   problemSolvingPA1.c
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(56,23): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(112,48): warning C4018: '<': signed/unsigned mismatch
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(113,48): warning C4018: '<': signed/unsigned mismatch
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(114,48): warning C4018: '<': signed/unsigned mismatch
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(115,48): warning C4018: '<': signed/unsigned mismatch
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(116,50): warning C4013: 'transNumCondition' undefined; assuming extern returning int
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(162,47): warning C4013: 'countToROW' undefined; assuming extern returning int
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\problemSolvingPA1.c(162,62): warning C4013: 'countToCOL' undefined; assuming extern returning int
   problemSolvingAssignment1.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\problemSolvingPA1\x64\Debug\problemSolvingPA1.exe
