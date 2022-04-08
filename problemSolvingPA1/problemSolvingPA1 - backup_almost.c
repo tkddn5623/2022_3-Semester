@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h> //<<DELETE.
 #define N 5000
 #define M 5000
 #pragma warning(disable : 4996)
@@ -30,7 +31,6 @@ int extendedCellPop[3 * N + 2][3 * M + 2];
 int rowVector[N];
 char cmd_argTer[N * M + 10];
 int cmd_argNum[N * M + 10];
-int cell_rowSubpop[N];
 
 int cell_ROW, cell_COL;
 
@@ -38,6 +38,8 @@ int main()
 {
     char cmd_type[11];
     int cmd_arg[4];
+    double RUNTIME = (double)clock() / CLOCKS_PER_SEC;
+    double ENDTIME = (double)clock() / CLOCKS_PER_SEC;
     while (1)
     {
         int count;
@@ -50,6 +52,7 @@ int main()
         }
         else if (!strcmp(cmd_type, "FUCK"))
         {
+            srand(time(NULL));
             for (int i = 1; i <= cell_ROW; i++) {
                 for (int j = 1; j <= cell_COL; j++) {
                     int temprand = rand();
@@ -147,66 +150,21 @@ int main()
         }
         else if (!strcmp(cmd_type, "settle"))
         {
-        inputArgument1(cmd_arg, 1);
-        int cell_rowSubpop[N];
-        int maxPop = -1;
-        int currentPop;
-        int tempPop;
-        int cityROW, cityCOL;
-
-        memset(cell_rowSubpop, 0, sizeof(cell_rowSubpop));
-        for (int i = 1; i <= cell_ROW; i++) {
-            for (int j = 1; j <= 2 * cmd_arg[0] + 1; j++) {
-                cell_rowSubpop[i - 1] += cell[i][j].population;
-            }
-        }
-
-        tempPop = addsubArr(cell_rowSubpop, 1, 2 * cmd_arg[0] + 1);
-        for (int j = 1; j <= (cell_COL - 2 * cmd_arg[0]); j++) {
-            currentPop = tempPop;
-            for (int i = 1; i <= (cell_ROW - 2 * cmd_arg[0]); i++) {
-                if (currentPop == maxPop) {
-                    if (cityCOL > j + cmd_arg[0]) {
-                        cityROW = i + cmd_arg[0];
-                        cityCOL = j + cmd_arg[0];
-                    }
-                    else if (cityCOL == j + cmd_arg[0]) {
-                        cityROW = cityROW < i + cmd_arg[0] ? cityROW : i + cmd_arg[0];
-
-                    }
-                }
-                else if (currentPop > maxPop) {
-                    cityROW = i + cmd_arg[0];
-                    cityCOL = j + cmd_arg[0];
-                    maxPop = currentPop;
-                }
-                //printf("BEFORE else3run, argu is %d %d\n", i + 2 * cmd_arg[0] + 1, j);
-                if (!isOut(i + 2 * cmd_arg[0] + 1, j)) {
-                    // printf("NOW 3rd else run\n");
-                    currentPop -= cell_rowSubpop[i - 1];
-                    currentPop += cell_rowSubpop[i + 2 * cmd_arg[0]];
+        
+            inputArgument1(cmd_arg, 1);
+            RUNTIME = (double)clock() / CLOCKS_PER_SEC;
+            int maxExtendROW = 10000, maxExtendCOL = 10000;
+            memset(extendedCellPop, 0, sizeof(extendedCellPop));
+            memset(rowVector, 0, sizeof(rowVector));
 
 
-                }
-            }
-            if (!isOut(1, j + 2 * cmd_arg[0]) + 1) {
-                for (int i = 1; i <= cell_ROW; i++) {
-                    cell_rowSubpop[i - 1] -= cell[i][j].population;
-                    cell_rowSubpop[i - 1] += cell[i][j + 2 * cmd_arg[0] + 1].population;
-                    if (i <= 2 * cmd_arg[0] + 1)
-                        tempPop = tempPop - cell[i][j].population + cell[i][j + 2 * cmd_arg[0] + 1].population;
-                }
-            }
-        }
-        for (int i = cityROW - cmd_arg[0]; i <= cityROW + cmd_arg[0]; i++)
-            for (int j = cityCOL - cmd_arg[0]; j <= cityCOL + cmd_arg[0]; j++)
-                cell[i][j].population = 0;
-        cell[cityROW][cityCOL].population = maxPop;
-        cell[cityROW][cityCOL].terrian = 'C';
+            ENDTIME = (double)clock() / CLOCKS_PER_SEC;
+            printf("TIME : %f\n", ENDTIME - RUNTIME);
         }
         else if (!strcmp(cmd_type, "print"))
         {
             inputArgument1(cmd_arg, 2);
+           // printf("%c %d %d\n", gett(cell, cmd_arg[0], cmd_arg[1]), getp(cell, cmd_arg[0], cmd_arg[1]), geth(cell, cmd_arg[0], cmd_arg[1]));
             printf("%c %d %d\n",
                 cell[cmd_arg[0]][cmd_arg[1]].terrian,
                 cell[cmd_arg[0]][cmd_arg[1]].population,
@@ -284,6 +242,14 @@ void inputArgument2(char* argTerPtr)
 int area(const int* argPtr)
 {
     return (argPtr[3] - argPtr[1] + 1) * (argPtr[2] - argPtr[0] + 1);
+}
+void move(cell_t cptr[N + 2][M + 2], int ROW_, int COL_, int toROW, int toCOL, int amount)
+{
+    if (isOut(toROW, toCOL) || isOut(ROW_, COL_)) return;
+    else {
+        cptr[ROW_ - 1][COL_ - 1].population -= amount;
+        cptr[toROW - 1][toCOL - 1].population += amount;
+    }
 }
 int addsubArr(int* subarr, int start, int end)
 {
