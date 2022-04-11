@@ -1,3 +1,8 @@
 ﻿  npc_c.c
-E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC_C\npc_c.c(225,25): warning C4101: 'temp': unreferenced local variable
-  NPC_C.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC_C\x64\Debug\NPC_C.exe
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(58,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type '__int64'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(58,9): message : consider using '%lld' in the format string
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(58,9): message : consider using '%Id' in the format string
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(58,9): message : consider using '%I64d' in the format string
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(41,12): warning C4101: 'A': unreferenced local variable
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\npc_c.c(230,25): warning C4101: 'temp': unreferenced local variable
+  NPC_C.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\NPC2022\NPC_C\x64\Debug\NPC_C.exe

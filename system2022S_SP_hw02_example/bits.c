@@ -175,5 +175,10 @@ NOTES:
  *   Rating: 2
  */
 int getByte(int x, int n) {
-  return 2;
+   x = x << (24 + (~(n << 3)+1) );
+   x = x >> 24;
+   x = x & 0x000000FF;
+
+
+  return x;
 }

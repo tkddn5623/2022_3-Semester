@@ -203,7 +203,8 @@ unsigned float_twice(unsigned uf) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return 2;
+    
+    return (x >> n) & ~(((0x1 << 31) >> n) << 1);
 }
 /* 
  * rotateLeft - Rotate x to the left by n
@@ -214,7 +215,13 @@ int logicalShift(int x, int n) {
  *   Rating: 3 
  */
 int rotateLeft(int x, int n) {
-  return 2;
+    int y;
+    y = (x >> (32 + (~n + 1))) & ~(((0x1 << 31) >> (32 + (~n+1))) << 1);
+    x = x << n;
+    
+    x = x + y;
+    
+  return x;
 }
 /* 
  * byteSwap - swaps the nth byte and the mth byte
@@ -226,7 +233,26 @@ int rotateLeft(int x, int n) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
-    return 2;
+  int i;
+  int j;
+  int a;
+  int b;
+  int m3;
+  int n3;
+  m3 = m<<3;
+  n3 = n<<3;
+  i = (0x1 << 31);
+  i = ~(i >> 23);
+  j = ~((i<<n3) | (i<<m3));
+  a = x >> n3;
+  b = x >> m3;
+  a = a & i;
+  b = b & i;
+  x = x & j;
+  x = (x | (a<<m3)) | (b<<n3);
+
+
+    return x;
 }
 /*
  * bitParity - returns 1 if x contains an odd number of 0's
