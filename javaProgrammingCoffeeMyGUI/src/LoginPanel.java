@@ -17,8 +17,8 @@ import javax.swing.JButton;
 
 public class LoginPanel extends JPanel {
 	private int branch;
-	private String id = "admin";
-	private String password = "1234";
+	private String id;
+	private String password;
 	private LoginPanel self;
 	private JPanel northPanel;
 	private JPanel centerPanel;

@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
-		StartLogin(); ///////////////////////////////////////////////////////////////¡ÚLOGIN¡Ú////
+		StartLogin(); ///////////////////////////////////////////////////////////////LOGIN////
 		setVisible(true);
 	}
 	public void StartLogin() {
@@ -37,9 +37,9 @@ public class MainFrame extends JFrame {
 		public void componentRemoved(ContainerEvent e) {
 			if(customerPanel == null && managerPanel == null) {
 				if(loginPanel.getBranch() == 1) 
-					StartCustomer(loginPanel.getID()); /////////////////////////////¡ÚCustomer¡Ú///
+					StartCustomer(loginPanel.getID()); /////////////////////////////Customer///
 				else if(loginPanel.getBranch() == 2) 
-					StartManager(); ////////////////////////////////////////////////¡ÚManager¡Ú////
+					StartManager(); ////////////////////////////////////////////////Manager////
 			}
 		}
 	}
