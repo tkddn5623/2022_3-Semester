@@ -18,66 +18,57 @@ public class CoffeeServiceImpl implements CoffeeService{
 	}
 	
 	@Override
-	public void viewAll() {
+	public String viewAll() {
 		// 커피메뉴 출력
+		String str = "";
 		Set<Coffee> keySet = map.keySet();
 		Iterator<Coffee> keyIter = keySet.iterator();
 		while(keyIter.hasNext()) {
 			Coffee coffee = keyIter.next();
-			System.out.println(coffee.getCoffeeName() + " : " + map.get(coffee) + "원");
+			str += coffee.getCoffeeName() + " : " + map.get(coffee) + "원" + " \n";
 		}
+		return str;
 	}
 
 	@Override
-	public void menuRegister() {
+	public boolean menuRegister(String menuName, String menuPrice) {
 		// 메뉴이름과 메뉴가격을 입력받아 메뉴등록
-		System.out.println("새로 등록하실 메뉴를 입력하세요 : ");
-		String name = scan.next();
-		System.out.println("새로 등록하실 메뉴의 가격을 입력하세요 : ");
-		int price = scan.nextInt();
-		map.put(new Coffee(name), price);
+		map.put(new Coffee(menuName), Integer.parseInt(menuPrice));
+		return true;
 	}
 
 	@Override
-	public void menuEdit() {
+	public boolean menuEdit(String menuName, String menuPrice) {
 		// 메뉴이름을 입력받아서 가격수정
-		System.out.println("가격을 수정하실 메뉴를 입력하세요 : ");
-		String name = scan.next();
 		
 		Set<Coffee> keySet = map.keySet();
 		Iterator<Coffee> keyIter = keySet.iterator();
 		
 		while(keyIter.hasNext()) {
 			Coffee edit = keyIter.next();
-			if(edit.getCoffeeName().equals(name)) {
-				System.out.println("수정하실 가격을 입력하세요 : ");
-				int price = scan.nextInt();
-				map.put(edit, price);
-				System.out.println(name + "의 가격을 수정하였습니다.");
-				return;
+			if(edit.getCoffeeName().equals(menuName)) {
+				map.put(edit, Integer.parseInt(menuPrice));
+				return true;
 			}
 		}
-		System.out.println(name + "은(는) 메뉴에 없습니다.");
+		return false;
 	}
 
 	@Override
-	public void menuDelete() {
+	public boolean menuDelete(String menuName, String menuPrice) {
 		// 메뉴이름을 입력받아 메뉴삭제
-		System.out.println("삭제하실 메뉴를 입력하세요 : ");
-		String name = scan.next();
 		
 		Set<Coffee> keySet = map.keySet();
 		Iterator<Coffee> keyIter = keySet.iterator();
 		
 		while(keyIter.hasNext()) {
 			Coffee del = keyIter.next();
-			if(del.getCoffeeName().equals(name)) {
+			if(del.getCoffeeName().equals(menuName)) {
 				map.remove(del);
-				System.out.println(name + " 메뉴를 삭제하였습니다.");
-				return;
+				return true;
 			}
 		}
-		System.out.println(name + "은(는) 메뉴에 없습니다.");
+		return false;
 	}
 
 	@Override
@@ -127,8 +118,6 @@ public class CoffeeServiceImpl implements CoffeeService{
 			return;
 		}
 		System.out.println("충전금이 없습니다.\n충전을 해주세요.");
-	}
-
-	
+	}	
 	
 }

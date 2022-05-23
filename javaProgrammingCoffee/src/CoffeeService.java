@@ -1,18 +1,18 @@
 
 public interface CoffeeService {
 
-	public abstract void viewAll();
+	public abstract String viewAll();
 	
-	public abstract void menuRegister();
+	public abstract boolean menuRegister(String menuName, String menuPrice);
 	
-	public abstract void menuEdit();
-	
-	public abstract void menuDelete();
+	public abstract boolean menuDelete(String menuName, String menuPrice);
 	
 	public abstract void chargeMoney();
 	
 	public abstract void order();
 	
 	public abstract void showMoney();
+
+	public abstract boolean menuEdit(String menuName, String menuPrice);
 	
 }
