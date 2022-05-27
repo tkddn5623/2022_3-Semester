@@ -16,10 +16,8 @@ import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -29,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 public class CustomerPanel extends JPanel {
 	public HashSet<Coffee> coffeeMenu;
 	private Vector<String> menuVector;
-	private Client client;
+	private int money;
 	private Socket socket;
 	private Thread timet;
 	private Thread t1;
@@ -50,16 +48,14 @@ public class CustomerPanel extends JPanel {
 		try {
 			socket = new Socket("localhost", 9000);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "관리자가 부재중입니다.");
+			System.out.println("Error: Fail to connect");
 			e.printStackTrace();
-			System.exit(1);
 		}
-		
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(5, 5));
 		coffeeMenu = new HashSet<Coffee>();
 		menuVector = new Vector<String>();
-		client = new Client(name);
+		money = 0;
 		
 		panel1 = new JPanel();
 		panel2 = new JPanel();
@@ -78,7 +74,7 @@ public class CustomerPanel extends JPanel {
 		mchargeButton.addActionListener(new ChargeListener());
 		moneyLabel = new JLabel();
 		//moneyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		moneyLabel.setText(client.getMoney() + " WON");
+		moneyLabel.setText(money + " WON");
 		moneyLabel.setPreferredSize(new Dimension(80,10));
 		
 		textField = new JTextField();
@@ -100,7 +96,7 @@ public class CustomerPanel extends JPanel {
 		timet = new TimeThread(clockLabel); //THREAD : for time clock
 		timet.start();
 		t1 = new TCPClientThreadMenu(socket, this);
-		t2 = new TCPClientThreadOrder(socket, client.getName());
+		t2 = new TCPClientThreadOrder(socket);
 		t1.start();
 		t2.start();
 		
@@ -122,8 +118,8 @@ public class CustomerPanel extends JPanel {
 	class ChargeListener implements ActionListener {
 		public void actionPerformed (ActionEvent e) {
 			int price = Integer.parseInt(textField.getText());
-			client.setMoney(client.getMoney() + price);
-			moneyLabel.setText(client.getMoney() + " WON");
+			money += price;
+			moneyLabel.setText(money + " WON");
 		}
 	}
 	class OrderListener implements ActionListener {
@@ -133,14 +129,14 @@ public class CustomerPanel extends JPanel {
 			while(iter.hasNext()) {
 				Coffee c = iter.next();
 				if(liststr != null && c.getName().equals(liststr.substring(0, liststr.lastIndexOf('[')))) { //Searching "Coffee" by "String"
-					if(client.getMoney() >= c.getPrice()) { //Success!
+					if(money >= c.getPrice()) { //Success!
 						msgLabel.setText(c.getName() + "를 주문하셨습니다.");
-						client.setMoney(client.getMoney() - c.getPrice());
+						money -= c.getPrice();
 						TCPClientThreadOrder t2Casting = (TCPClientThreadOrder) t2;
-						t2Casting.setOrder(c);
+						t2Casting.setCoffee(c);
 					}
 					else{ //Success, but no money
-						msgLabel.setText((c.getPrice() - client.getMoney()) + "원이 더 필요합니다. " + "(" + c.getName() + ")");
+						msgLabel.setText((c.getPrice() - money) + "원이 더 필요합니다. " + "(" + c.getName() + ")");
 					}
 					break;
 				}
@@ -148,7 +144,34 @@ public class CustomerPanel extends JPanel {
 					msgLabel.setText("버그발생 : 찾을 수 없음 " + liststr.substring(0, liststr.lastIndexOf('[')));
 				}
 			}
-			moneyLabel.setText(client.getMoney() + " WON");
+			moneyLabel.setText(money + " WON");
+		}
+	}
+	public class TimeThread extends Thread {
+		private Thread t; 
+		private JLabel clock;
+		private Calendar cal;
+		public String timeStr;
+		public TimeThread(JLabel clock) {
+			this.clock = clock;
+		}
+		public void start () {  
+			if (t == null) { 
+				t = new Thread (this); 
+				t.start (); 
+			} 
+		}
+		public void run() {
+			while(true) {
+				cal = Calendar.getInstance();
+				timeStr = cal.get(cal.AM_PM) == 0 ? "AM" : "PM" + " " + cal.get(cal.HOUR) + " : " + cal.get(cal.MINUTE) + " : " + cal.get(cal.SECOND);
+				clock.setText(timeStr);
+				try {
+					t.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

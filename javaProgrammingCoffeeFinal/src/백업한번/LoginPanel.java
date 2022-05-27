@@ -120,7 +120,7 @@ public class LoginPanel extends JPanel {
 				String tempID = self.getID();
 				String tempPW = new String(pwField.getPassword());
 				if(!(tempID.equals(id) && tempPW.contentEquals(password))) {
-					msgLabel.setText("관리자가 아닙니다.");
+					msgLabel.setText("That id or password didn't work.");
 				}
 				else {
 					self.branch = 2; // As the Manager
@@ -129,8 +129,8 @@ public class LoginPanel extends JPanel {
 				}
 			}
 			else{                    //Try login as a Customer
-				if(12 < self.getID().length() || self.getID().length() < 4)
-					msgLabel.setText("아이디는 4글자 이상 12글자 이하로 설정해주세요.");
+				if(self.getID().equals(""))
+					msgLabel.setText("Blank username isn't allowed.");
 				else {
 					self.branch = 1; // As a Customer
 					self.setVisible(false);

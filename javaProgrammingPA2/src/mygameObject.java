@@ -8,4 +8,5 @@ public class mygameObject extends gameObject {
 	public String Name() {
 		return str;
 	}
+	public void setDest() {}
 }

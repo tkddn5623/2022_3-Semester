@@ -1,24 +1,34 @@
 import javax.swing.JPanel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 
 import javax.swing.JButton;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.Vector;
 import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JList;
 import javax.swing.JTextPane;
 
 public class ManagerPanel extends JPanel {
 	private ServerSocket svsocket;
-	private ArrayList<Thread> TCPServerMenuList;
+	private Socket ussocket;
+	private TCPServerThreadOrder t1;
+	private TCPServerThreadMenu t2;
 	private Vector<String> orderList;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -36,13 +46,19 @@ public class ManagerPanel extends JPanel {
 	private JButton btnNewButton_4;
 	private JList<String> list;
 
+	/**
+	 * Create the panel.
+	 */
 	public ManagerPanel() {
+		try {
+			svsocket = new ServerSocket(9000);
+			ussocket = svsocket.accept();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		orderList = new Vector<String>();
 		setLayout(null);
-		
-		TCPServerMenuList = new ArrayList<Thread>();
-		TCPServer server = new TCPServer(9000);
-		server.start();
 		
 		textField = new JTextField();
 		textField.setFont(new Font("굴림", Font.BOLD, 14));
@@ -115,11 +131,15 @@ public class ManagerPanel extends JPanel {
 		list = new JList<String>(orderList);
 		list.setBounds(411, 35, 156, 359);
 		add(list);
+
+		t1 = new TCPServerThreadOrder(ussocket, orderList, list);
 		
 		textPane = new JTextPane();
 		textPane.setBounds(22, 157, 366, 237);
 		add(textPane);
-		textPane.setText(service.viewAll());
+		t2 = new TCPServerThreadMenu(ussocket, service);
+		t1.start();
+		t2.start();
 
 	}
 	
@@ -130,10 +150,7 @@ public class ManagerPanel extends JPanel {
 			boolean success = service.menuEdit(menuName, menuPrice);
 			if (success == true) {
 				JOptionPane.showMessageDialog(null, "메뉴를 수정하였습니다.");
-				Iterator<Thread> iter = TCPServerMenuList.iterator();
-				while(iter.hasNext()) 
-					iter.next().resume();
-				textPane.setText(service.viewAll());
+				t2.resume();
 			} else {
 				JOptionPane.showMessageDialog(null, "수정하려는 메뉴가 없습니다.");
 			}
@@ -147,10 +164,7 @@ public class ManagerPanel extends JPanel {
 			boolean success = service.menuDelete(menuName, menuPrice);
 			if (success == true) {
 				JOptionPane.showMessageDialog(null, "메뉴를 삭제하였습니다.");
-				Iterator<Thread> iter = TCPServerMenuList.iterator();
-				while(iter.hasNext()) 
-					iter.next().resume();
-				textPane.setText(service.viewAll());
+				t2.resume();
 			} else {
 				JOptionPane.showMessageDialog(null, "삭제하려는 메뉴가 없습니다.");
 			}
@@ -164,10 +178,7 @@ public class ManagerPanel extends JPanel {
 			boolean success = service.menuRegister(menuName, menuPrice);
 			if (success == true) {
 				JOptionPane.showMessageDialog(null, "메뉴를 추가하였습니다.");
-				Iterator<Thread> iter = TCPServerMenuList.iterator();
-				while(iter.hasNext()) 
-					iter.next().resume();
-				textPane.setText(service.viewAll());
+				t2.resume();
 			}else {
 				JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.");
 			}
@@ -186,29 +197,5 @@ public class ManagerPanel extends JPanel {
 			new MainFrame();
 			setVisible(false);
 		}
-	}
-	class TCPServer extends Thread{
-		private int port;
-		TCPServer(int port){
-			this.port = port;
-		}
-		public void run(){
-			try {
-	            svsocket = new ServerSocket(port);
-	            while(true) {
-	                Socket socketUser = svsocket.accept();
-	                Thread thdOrder = new TCPServerThreadOrder(socketUser, orderList, list);
-	               	thdOrder.start();
-	                Thread thdMenu = new TCPServerThreadMenu(socketUser, service);
-	                TCPServerMenuList.add(thdMenu);
-	        		thdMenu.start();
-	                
-	        		
-	            }                 
-			} catch (IOException e) {
-				e.printStackTrace(); 
-			}
-		}
-		
 	}
 }

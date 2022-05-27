@@ -8,10 +8,6 @@ public class CoffeeServiceImpl implements CoffeeService{
 		coffeeMenu = new HashSet<Coffee>();
 		coffeeMenu.add(new Coffee("¾Æ¸Þ¸®Ä«³ë", 2000));
 		coffeeMenu.add(new Coffee("Ä«Æä¶ó¶¼", 3000));
-		coffeeMenu.add(new Coffee("¹Ù´Ò¶ó¶ó¶¼", 4000));
-		coffeeMenu.add(new Coffee("ÄÉÀÌÅ©", 6000));
-		coffeeMenu.add(new Coffee("ºù¼ö", 8000));
-		coffeeMenu.add(new Coffee("ÅÒºí·¯", 5000));
 	}
 	public HashSet<Coffee> getMenu() {
 		return coffeeMenu;
@@ -23,7 +19,7 @@ public class CoffeeServiceImpl implements CoffeeService{
 		Iterator<Coffee> iter = coffeeMenu.iterator();
 		while(iter.hasNext()) {
 			Coffee coffee = iter.next();
-			str += coffee.getName() + " : " + coffee.getPrice() + "¿ø" + "\n";
+			str += coffee.getName() + " : " + coffee.getPrice() + "¿ø" + "  ";
 		}
 		return str;
 	}
