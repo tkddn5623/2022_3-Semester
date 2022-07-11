@@ -32,3 +32,6 @@
 *.app
 *.class
 /.metadata/
+
+# Putty
+*.ppk
