@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 int getSum(int* subsum_t, int a, int b) {
@@ -12,7 +13,6 @@ int maxSubArray(int* nums, int numsSize)
 
 	subsum[0] = nums[0];
 	max = nums[0];
-
 	for (int i = 1; i < numsSize; i++) {
 		max = max < nums[i] ? nums[i] : max; // This will get max value
 		subsum[i] = subsum[i - 1] + nums[i];
@@ -46,10 +46,15 @@ int maxSubArray(int* nums, int numsSize)
 	return ret;
 }
 
-
+int arr[100000];
 int main()
 {
 	//int arr[] = { -2,1,-3,4,-1,2,1,-5,4 };
-	int arr[] = { 3, -2, -3, -3, 1, 3, 0 };
-	printf("%d\n", maxSubArray(arr, sizeof(arr) / sizeof(int)));
+	//int arr[] = { 3, -2, -3, -3, 1, 3, 0 };
+	int a;
+	scanf("%d", &a);
+	for (int i = 0; i < a; i++) {
+		scanf("%d", &arr[i]);
+	}
+	printf("%d\n", maxSubArray(arr, a));
 }
