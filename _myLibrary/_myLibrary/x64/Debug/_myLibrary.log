@@ -1,0 +1,8 @@
+﻿  ArrayStack.c
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\_myLibrary\_myLibrary\ArrayStack.c(14,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\_myLibrary\_myLibrary\ArrayStack.c(14,9): message : consider using '%zd' in the format string
+  Main.c
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\_myLibrary\_myLibrary\Main.c(7,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\_myLibrary\_myLibrary\Main.c(7,9): message : consider using '%zd' in the format string
+  Generating Code...
+  _myLibrary.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\_myLibrary\x64\Debug\_myLibrary.exe

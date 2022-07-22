@@ -31,61 +31,14 @@ void Swap(Data* arr, int pos1, int pos2);
 int Partition(Data* arr, int left, int right);
 void Sort(Data* arr, int left, int right);
 void PR(List* plist);
-
-int main()
-{
-	List basket;
-	int N, K, A;
-	int T;
-	InitList(&basket);
-	int arr[100000];
-	int count = 0;
-
-	scanf("%d %d %d", &N, &K, &T);
-	for (int i = 0; i < N; i++) {
-		scanf("%d", &A);
-		arr[i] = A;
-		//InsertFirst(&basket, A);
-	}
-	Sort(arr, 0, N - 1);
-	for (int i = N - 1; i >= 0; i--)
-		if (arr[i] != 0)
-			InsertFirst(&basket, arr[i]);
-
-	for (int i = 0; i < 2 * N; i++) {
-		//PR(&basket); printf("Left count is %d\n", T - count);
-		if (basket.len == 0) {
-			printf("YES");
-			break;
-		}
-		if (basket.len == 1 || isFail(&basket, count, K, T)) {
-			printf("NO");
-			break;
-		}
-		if (isLeftDelete(&basket, K)) {
-			count += ReadItem(&basket, 0);
-			WriteItem(&basket, basket.len - 1, ReadItem(&basket, 0) + ReadItem(&basket, basket.len - 1));
-			RemoveFirst(&basket);
-		}
-		else {
-			count += K - ReadItem(&basket, basket.len - 1);
-			WriteItem(&basket, 0, ReadItem(&basket, 0) - (K - ReadItem(&basket, basket.len - 1)));
-			WriteItem(&basket, basket.len - 1, K);
-			RemoveLast(&basket);
-			if (ReadItem(&basket, 0) == 0) {
-				RemoveFirst(&basket);
-			}
-		}
-	}
-
-}
+int cmp(const void* first, const void* second);
 
 int isFail(List* plist, int c, int K, int T)
 {
 	int smaller = ReadItem(plist, 0) <= K - ReadItem(plist, plist->len - 1) ? ReadItem(plist, 0) : K - ReadItem(plist, plist->len - 1);
 	/*if ((plist->sum < K && c != 0))
 		printf("Third condition activated but not return 1\n");*/
-	if (smaller > T - c || T - c <= 0  )
+	if (smaller > T - c || T - c <= 0)
 		return 1;
 	else
 		return 0;
@@ -243,4 +196,65 @@ void PR(List* plist)
 		printf("_%d_", ReadItem(plist, i));
 	}
 	printf("\n");
+}
+int cmp(const void* first, const void* second)
+{
+	if (*(int*)first > *(int*)second)
+		return 1;
+	else if (*(int*)first < *(int*)second)
+		return -1;
+	else
+		return 0;
+}
+int main()
+{
+	List basket;
+	int N, K, A;
+	int T;
+	InitList(&basket);
+	int arr[100000];
+	int count = 0;
+
+	scanf("%d %d %d", &N, &K, &T);
+	for (int i = 0; i < N; i++) {
+		scanf("%d", &A);
+		arr[i] = A;
+		//InsertFirst(&basket, A);
+	}
+	qsort(arr, N, sizeof(int), cmp);
+	//Sort(arr, 0, N - 1); // Critical Path!!!!!!!!!!!
+	for (int i = N - 1; i >= 0; i--)
+		if (arr[i] != 0)
+			InsertFirst(&basket, arr[i]);
+
+	for (int i = 0; i < 2 * N; i++) {
+		//PR(&basket); printf("Left count is %d\n", T - count);
+		if (basket.len == 0) {
+			printf("YES");
+			break;
+		}
+		if (basket.len == 1 || isFail(&basket, count, K, T)) {
+			printf("NO");
+			break;
+		}
+		if (isLeftDelete(&basket, K)) {
+			count += ReadItem(&basket, 0);
+			WriteItem(&basket, basket.len - 1, ReadItem(&basket, 0) + ReadItem(&basket, basket.len - 1));
+			RemoveFirst(&basket);
+		}
+		else {
+			count += K - ReadItem(&basket, basket.len - 1);
+			WriteItem(&basket, 0, ReadItem(&basket, 0) - (K - ReadItem(&basket, basket.len - 1)));
+			WriteItem(&basket, basket.len - 1, K);
+			RemoveLast(&basket);
+			if (ReadItem(&basket, 0) == 0) {
+				RemoveFirst(&basket);
+			}
+		}
+		/*if (basket.len == 0) {
+			printf("YES");
+			break;
+		}*/
+	}
+
 }

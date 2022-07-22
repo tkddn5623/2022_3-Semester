@@ -1,0 +1,6 @@
+﻿  bj10828.c
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\10828_스택\10828_스택\bj10828.c(17,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\10828_스택\10828_스택\bj10828.c(17,9): message : consider using '%zd' in the format string
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\10828_스택\10828_스택\bj10828.c(17,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'size_t'
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\10828_스택\10828_스택\bj10828.c(17,9): message : consider using '%zd' in the format string
+  10828_스택.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\10828_스택\x64\Debug\10828_스택.exe

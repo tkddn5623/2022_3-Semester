@@ -1,2 +1,4 @@
 ﻿  16563_어려운 소인수분해.c
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\16563_어려운 소인수분해\16563_어려운 소인수분해\16563_어려운 소인수분해.c(26,30): warning C4244: 'function': conversion from 'double' to 'const int', possible loss of data
+E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\16563_어려운 소인수분해\16563_어려운 소인수분해\16563_어려운 소인수분해.c(26,35): warning C4020: 'getFactorList': too many actual parameters
   16563_어려운 소인수분해.vcxproj -> E:\!!Documents 2021\!!Programming projects\2022_3-Semester\Baekjoon2022\16563_어려운 소인수분해\x64\Debug\16563_어려운 소인수분해.exe
