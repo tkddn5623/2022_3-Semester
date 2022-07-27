@@ -139,17 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayDeque.h" />
-    <ClInclude Include="ArrayQueue.h" />
-    <ClInclude Include="ArrayStack.h" />
-    <ClInclude Include="LinearSieve.h" />
+    <ClInclude Include="Data Structures\ArrayDeque.h" />
+    <ClInclude Include="Data Structures\ArrayQueue.h" />
+    <ClInclude Include="Data Structures\ArrayStack.h" />
+    <ClInclude Include="Data Structures\ArrayHeap.h" />
+    <ClInclude Include="Algorithms\LinearSieve.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayDeque.c" />
-    <ClCompile Include="ArrayQueue.c" />
-    <ClCompile Include="ArrayStack.c" />
-    <ClCompile Include="LinearSieve.c" />
-    <ClCompile Include="Main.c" />
+    <ClCompile Include="Data Structures\ArrayDeque.c" />
+    <ClCompile Include="Data Structures\ArrayQueue.c" />
+    <ClCompile Include="Data Structures\ArrayStack.c" />
+    <ClCompile Include="Data Structures\ArrayHeap.c" />
+    <ClCompile Include="Algorithms\LinearSieve.c" />
+    <ClCompile Include="_Main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

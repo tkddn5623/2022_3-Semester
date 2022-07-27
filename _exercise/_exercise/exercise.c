@@ -1,114 +1,86 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 typedef int Element;
 typedef struct {
-	Element* items;
+	Element item;
+	int priority;
+} HNode;
+typedef struct {
+	HNode* nodes;
 	int capacity;
-	int front;
-	int rear;
-} ArrayDeque;
-ArrayDeque * AD_newDeque(const int max) {
-	ArrayDeque* pdeque;
-	if ((pdeque = malloc(sizeof(ArrayDeque))) == NULL) exit(1);
-	if ((pdeque->items = malloc((max + 1) * sizeof(Element))) == NULL) exit(1);
-	pdeque->capacity = max + 1;
-	pdeque->front = 0;
-	pdeque->rear = 0;
-	return pdeque;
+	int size;
+} ArrayHeap;
+ArrayHeap* AH_newHeap(const int max) {
+	ArrayHeap* pheap;
+	if ((pheap = malloc(sizeof(ArrayHeap))) == NULL) exit(1);
+	if ((pheap->nodes = malloc((max + 1) * sizeof(HNode))) == NULL) exit(1);
+	pheap->capacity = max + 1;
+	pheap->size = 0;
+	return pheap;
 }
-void AD_deleteDeque(ArrayDeque* pdeque) {
-	if (pdeque == NULL || pdeque->items == NULL) exit(1);
-	free(pdeque->items);
-	free(pdeque);
+void AH_deleteHeap(ArrayHeap* pheap) {
+	if (pheap == NULL || pheap->nodes == NULL) exit(1);
+	free(pheap->nodes);
+	free(pheap);
 }
-int AD_isFull(const ArrayDeque* pdeque) {
-	return pdeque->front == (pdeque->rear + 1) % pdeque->capacity;
+int AH_isEmpty(const ArrayHeap* pheap) {
+	return pheap->size == 0;
 }
-int AD_isEmpty(const ArrayDeque* pdeque) {
-	return pdeque->front == pdeque->rear;
+int AH_isFull(const ArrayHeap* pheap) {
+	return pheap->size == pheap->capacity - 1;
 }
-int AD_size(const ArrayDeque* pdeque) {
-	const int subtract = pdeque->rear - pdeque->front;
-	if (subtract >= 0) return subtract;
-	else return pdeque->capacity + subtract;
+void AH_push(ArrayHeap* pheap, const Element item, const int priority) {
+	HNode newNode;
+	int index = pheap->size + 1;
+	while (index > 1) {
+		int parentIndex = index / 2;
+		if (priority < pheap->nodes[parentIndex].priority) { 
+			pheap->nodes[index] = pheap->nodes[parentIndex];
+			index = parentIndex;
+		}
+		else break;
+	}
+	newNode.item = item;
+	newNode.priority = priority;
+	pheap->nodes[index] = newNode;
+	pheap->size++;
 }
-Element AD_front(const ArrayDeque* pdeque) {
-	const int front = pdeque->front;
-	if (front == pdeque->rear) exit(1);
-	return pdeque->items[front];
-}
-Element AD_back(const ArrayDeque* pdeque) {
-	const int rear = pdeque->rear, capacity = pdeque->capacity;
-	if (pdeque->front == rear) exit(1);
-	return pdeque->items[(rear + capacity - 1) % capacity];
-}
-void AD_pushFront(ArrayDeque* pdeque, const Element item) {
-	const int capacity = pdeque->capacity, behind = (pdeque->front + capacity - 1) % capacity;
-	if (pdeque->front == (pdeque->rear + 1) % capacity) exit(1);
-	pdeque->items[behind] = item;
-	pdeque->front = behind;
-}
-void AD_pushBack(ArrayDeque* pdeque, const Element item) {
-	const int rear = pdeque->rear, capacity = pdeque->capacity;
-	if (pdeque->front == (rear + 1) % capacity) exit(1);
-	pdeque->items[rear] = item;
-	pdeque->rear = (rear + 1) % capacity;
-}
-Element AD_popFront(ArrayDeque* pdeque) {
-	const int front = pdeque->front;
-	if (front == pdeque->rear) exit(1);
-	pdeque->front = (front + 1) % pdeque->capacity;
-	return pdeque->items[front];
-}
-Element AD_popBack(ArrayDeque* pdeque) {
-	const int rear = pdeque->rear, capacity = pdeque->capacity;
-	const int behind = (rear + capacity - 1) % capacity;
-	if (pdeque->front == rear) exit(1);
-	pdeque->rear = behind;
-	return pdeque->items[behind];
+Element AH_pop(ArrayHeap* pheap) {
+	const Element topitem = pheap->nodes[1].item;
+	const HNode last = pheap->nodes[pheap->size];
+	const int size = pheap->size;
+	int left, pickedChild, parentIndex = 1;
+	while ((left = parentIndex * 2) <= size) {
+		if (left == size) pickedChild = left;
+		else if (pheap->nodes[left].priority < pheap->nodes[left + 1].priority) pickedChild = left; 
+		else pickedChild = left + 1;
+
+		if (last.priority > pheap->nodes[pickedChild].priority) {
+			pheap->nodes[parentIndex] = pheap->nodes[pickedChild];
+			parentIndex = pickedChild;
+		}
+		else break;
+	}
+	pheap->nodes[parentIndex] = last;
+	pheap->size--;
+	return topitem;
 }
 int main() {
-	ArrayDeque* deque = AD_newDeque(10000);
-	int N, argument;
-	char cmdline[20];
-	char* cmdarg;
-	scanf("%d ", &N);
+	ArrayHeap* heap;
+	int N;
+	scanf("%d", &N);
+	heap = AH_newHeap(N);
 	for (int i = 0; i < N; i++) {
-		fgets(cmdline, sizeof(cmdline), stdin);
-		strtok(cmdline, "\n");
-		cmdarg = strtok(cmdline, " ");
-		if (!strcmp(cmdarg, "push_front")) {
-			argument = atoi(strtok(NULL, " "));
-			if (!AD_isFull(deque)) AD_pushFront(deque, argument);
+		int arg;
+		scanf("%d", &arg);
+		if (arg) {
+			if(!AH_isFull(heap)) AH_push(heap, arg, arg);
 		}
-		else if (!strcmp(cmdarg, "push_back")) {
-			argument = atoi(strtok(NULL, " "));
-			if (!AD_isFull(deque)) AD_pushBack(deque, argument);
-		}
-		else if (!strcmp(cmdarg, "pop_front")) {
-			if (AD_isEmpty(deque)) printf("-1\n");
-			else printf("%d\n", AD_popFront(deque));
-		}
-		else if (!strcmp(cmdarg, "pop_back")) {
-			if (AD_isEmpty(deque)) printf("-1\n");
-			else printf("%d\n", AD_popBack(deque));
-		}
-		else if (!strcmp(cmdarg, "size")) {
-			printf("%d\n", AD_size(deque));
-		}
-		else if (!strcmp(cmdarg, "empty")) {
-			printf("%d\n", AD_isEmpty(deque));
-		}
-		else if (!strcmp(cmdarg, "front")) {
-			if (AD_isEmpty(deque)) printf("-1\n");
-			else printf("%d\n", AD_front(deque));
-		}
-		else if (!strcmp(cmdarg, "back")) {
-			if (AD_isEmpty(deque)) printf("-1\n");
-			else printf("%d\n", AD_back(deque));
+		else {
+			if (!AH_isEmpty(heap)) printf("%d\n", AH_pop(heap));
+			else printf("0\n");
 		}
 	}
-	AD_deleteDeque(deque);
+	AH_deleteHeap(heap);
 }
